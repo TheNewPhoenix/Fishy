@@ -27,7 +27,7 @@ public class Camera {
 	Vector2f centerPosition = new Vector2f(Window.getWidth()/2, Window.getHeight()/2);
 	
 	public void input(){
-		float movAmt = 0.2f;
+		float movAmt = 0.5f;
 		float sensitivity = 0.5f;
 		
 		if(Input.GetKey(Input.KEY_ESCAPE))

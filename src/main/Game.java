@@ -1,7 +1,6 @@
 package main;
 
 import main.camera.Camera;
-import main.input.Input;
 import main.maths.Transform;
 import main.models.Shader;
 import main.terrain.Terrain;
@@ -19,7 +18,7 @@ public class Game {
 		//mesh = ResourceLoader.loadMesh("cube.obj");
 		shader = new Shader();
 		camera = new Camera();
-		terrain = new Terrain(4);
+		terrain = new Terrain("./res/heightMaps/hMap.png");
 		
 		Transform.setProjection(70f, Main.WIDTH, Main.HEIGHT, 0.1f, 1000);
 		Transform.setCamera(camera);
