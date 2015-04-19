@@ -1,11 +1,8 @@
-package main.terrain;
+package main.objects_3d;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -13,14 +10,11 @@ import main.maths.Vector3f;
 import main.models.Mesh;
 import main.models.Vertex;
 
-public class Terrain {
+public class Terrain extends Mesh {
 	
-	private static final float MAX_HEIGHT = 40;
+	private static final float MAX_HEIGHT = 15;
 	private static final float MAX_PIXEL_COLOR = 256 * 256 * 256;
-	
-	private final Random random = new Random();
-	private List<Mesh> meshes = new ArrayList<Mesh>();
-	
+		
 	public Terrain(String fileName){
 		generateTerrain(fileName);
 	}
@@ -36,15 +30,12 @@ public class Terrain {
 		}
 		
 		int SECTIONSIZE = image.getWidth();
-		
-		Mesh mesh = new Mesh();
-		
+				
 		Vertex[] vertices = new Vertex[(SECTIONSIZE + 1) * (SECTIONSIZE + 1)];
 		int vertexPointer = 0;
 		for(int x = 0; x < SECTIONSIZE + 1; x++){
 			for(int z = 0; z < SECTIONSIZE + 1; z++){
 				vertices[vertexPointer] = new Vertex(new Vector3f(x, getHeight(x - 1, z - 1, image), z));
-				//System.out.println(vertices[vertexPointer].getPos().getX() + ", " + vertices[vertexPointer].getPos().getZ());
 				vertexPointer++;
 			}
 		}
@@ -66,10 +57,8 @@ public class Terrain {
 			}
 		}
 		
-		mesh.addVertices(vertices, indices);
-		
-		meshes.add(mesh);
-	}
+		addVertices(vertices, indices);
+	}	
 	
 	private float getHeight(int x, int z, BufferedImage image){
 		if(x < 0 || x >= image.getWidth() || z < 0 || z > image.getWidth()) 
@@ -79,11 +68,5 @@ public class Terrain {
 		height /= MAX_PIXEL_COLOR / 2f;
 		height *= MAX_HEIGHT;
 		return height;
-	}
-	
-	public void draw(){
-		for(int i = 0; i < meshes.size(); i++){
-			meshes.get(i).draw();
-		}
 	}
 }

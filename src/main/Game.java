@@ -2,23 +2,24 @@ package main;
 
 import main.camera.Camera;
 import main.maths.Transform;
+import main.maths.Vector3f;
 import main.models.Shader;
-import main.terrain.Terrain;
+import main.objects_3d.Cube;
 import main.utils.ResourceLoader;
 
 public class Game {
 	
-	//private Mesh mesh;
 	private Shader shader;
 	private Transform transform;
 	private Camera camera;
-	private Terrain terrain;
 	
+	private Cube cube;
+		
 	public Game() {
-		//mesh = ResourceLoader.loadMesh("cube.obj");
 		shader = new Shader();
-		camera = new Camera();
-		terrain = new Terrain("./res/heightMaps/hMap.png");
+		camera = new Camera(new Vector3f(0, 1, 0), new Vector3f(0, 0, 1), new Vector3f(0, 1, 0));
+				
+		cube = new Cube(0, 0, 0, 1);
 		
 		Transform.setProjection(70f, Main.WIDTH, Main.HEIGHT, 0.1f, 1000);
 		Transform.setCamera(camera);
@@ -46,9 +47,9 @@ public class Game {
 	}
 	
 	public void render(){
+		
 		shader.bind();
 		shader.setUniform("transform", transform.getProjectedTransformation());
-		terrain.draw();
-		//mesh.draw();
+		cube.draw();
 	}
 }
